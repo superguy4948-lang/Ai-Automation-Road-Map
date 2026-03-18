@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>AI Automation Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3d;
+    --accent: #7c3aed;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --text: #e8e8f0;
+    --text-muted: #888899;
+    --glow: rgba(124, 58, 237, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.15) 0%, transparent 50%),
+                var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+  }
+
+  .badge {
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.2));
+    border: 1px solid rgba(124,58,237,0.4);
+    color: var(--accent2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .badge::before { content: '⚡'; font-size: 12px; }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 340px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-pill .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-pill .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    text-align: center;
+    padding: 16px;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(45deg);
+    animation: bounce 1.5s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.5; }
+    50% { transform: rotate(45deg) translateY(5px); opacity: 1; }
+  }
+
+  /* SECTION STYLES */
+  section {
+    padding: 48px 20px;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .section-title span {
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* WHAT IS SECTION */
+  .what-is-section {
+    background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+  }
+
+  .info-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .info-card.purple::before { background: var(--accent); }
+  .info-card.cyan::before { background: var(--accent2); }
+  .info-card.amber::before { background: var(--accent3); }
+  .info-card.green::before { background: var(--accent4); }
+
+  .info-card .icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .info-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .info-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* WHY LEARN */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .why-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+
+  .why-item:hover { border-color: var(--accent); }
+
+  .why-item .why-icon { font-size: 24px; margin-bottom: 8px; }
+  .why-item .why-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .why-item .why-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ROADMAP */
+  .roadmap-section {
+    background: var(--surface);
+  }
+
+  .phase {
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .phase-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .phase-num.p1 { background: linear-gradient(135deg, #7c3aed, #9d4edd); }
+  .phase-num.p2 { background: linear-gradient(135deg, #06b6d4, #0284c7); }
+  .phase-num.p3 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .phase-num.p4 { background: linear-gradient(135deg, #10b981, #059669); }
+  .phase-num.p5 { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+  .phase-info .phase-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .phase-info .phase-duration {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .phase-connector {
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+    margin-left: 21px;
+    margin-top: -8px;
+    margin-bottom: 4px;
+  }
+
+  .task-list {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .task-item:last-child { border-bottom: none; }
+  .task-item:hover { background: rgba(124,58,237,0.05); }
+
+  .task-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .task-dot.p1 { background: var(--accent); }
+  .task-dot.p2 { background: var(--accent2); }
+  .task-dot.p3 { background: var(--accent3); }
+  .task-dot.p4 { background: var(--accent4); }
+  .task-dot.p5 { background: #ef4444; }
+
+  .task-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .task-text strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .task-text span {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* FREE COURSES */
+  .courses-section {
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  }
+
+  .course-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .course-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .course-thumb {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .course-thumb.vid1 {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a0533 50%, #0d1a2e 100%);
+  }
+
+  .course-thumb.vid2 {
+    background: linear-gradient(135deg, #0f1a0f 0%, #051a0d 50%, #0d1a1a 100%);
+  }
+
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .play-btn:hover {
+    background: rgba(124,58,237,0.4);
+    border-color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  .play-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    margin-left: 4px;
+  }
+
+  .course-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .course-label.free { color: var(--accent4); }
+
+  .course-info {
+    padding: 16px;
+  }
+
+  .course-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .course-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .meta-chip {
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 100px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--accent2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .meta-chip.green {
+    background: rgba(16,185,129,0.1);
+    border-color: rgba(16,185,129,0.2);
+    color: var(--accent4);
+  }
+
+  .course-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .watch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent), #9d4edd);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: opacity 0.2s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .watch-btn:hover { opacity: 0.9; transform: scale(0.99); }
+  .watch-btn span { font-size: 16px; }
+
+  /* PLATFORMS */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .platform-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .platform-icon { font-size: 28px; }
+
+  .platform-name {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .platform-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .platform-tag {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 100px;
+    background: rgba(16,185,129,0.1);
+    color: var(--accent4);
+    border: 1px solid rgba(16,185,129,0.2);
+  }
+
+  /* TIPS */
+  .tip-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 4px solid;
+    border-radius: 0 16px 16px 0;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .tip-card.t1 { border-left-color: var(--accent); }
+  .tip-card.t2 { border-left-color: var(--accent2); }
+  .tip-card.t3 { border-left-color: var(--accent3); }
+  .tip-card.t4 { border-left-color: var(--accent4); }
+
+  .tip-icon { font-size: 22px; flex-shrink: 0; }
+
+  .tip-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .tip-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* FOOTER CTA */
+  .footer-cta {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 24px;
+    padding: 32px 20px;
+    text-align: center;
+    margin: 0 20px 40px;
+  }
+
+  .footer-cta .cta-emoji { font-size: 48px; margin-bottom: 16px; }
+
+  .footer-cta h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .footer-cta p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    color: white;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: 'Syne', sans-serif;
+    transition: opacity 0.2s;
+  }
+
+  .cta-btn:hover { opacity: 0.9; }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * {
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero > *:nth-child(5) { animation-delay: 0.5s; }
+
+  /* FLOATING PARTICLES */
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.3;
+    animation: float 8s infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+    33% { transform: translateY(-30px) translateX(15px); opacity: 0.6; }
+    66% { transform: translateY(-10px) translateX(-10px); opacity: 0.3; }
+  }
+
+  .p-1 { top: 20%; left: 80%; animation-delay: 0s; }
+  .p-2 { top: 60%; left: 90%; animation-delay: 2s; background: var(--accent2); }
+  .p-3 { top: 40%; left: 10%; animation-delay: 4s; background: var(--accent3); }
+  .p-4 { top: 80%; left: 70%; animation-delay: 1s; }
+  .p-5 { top: 10%; left: 40%; animation-delay: 3s; background: var(--accent2); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="particle p-1"></div>
+  <div class="particle p-2"></div>
+  <div class="particle p-3"></div>
+  <div class="particle p-4"></div>
+  <div class="particle p-5"></div>
+
+  <div class="badge">Beginner Roadmap 2025</div>
+  <h1>Master <span>AI Agents</span> &amp; n8n Automation</h1>
+  <p>Zero to hero guide for learning AI automations, building AI agents, and earning with n8n — step by step.</p>
+  <div class="hero-stats">
+    <div class="stat-pill">
+      <div>
+        <div class="num">5</div>
+        <div class="label">Phases</div>
+      </div>
+    </div>
+    <div class="stat-pill">
+      <div>
+        <div class="num">100%</div>
+        <div class="label">Free to Start</div>
+      </div>
+    </div>
+    <div class="stat-pill">
+      <div>
+        <div class="num">n8n</div>
+        <div class="label">Core Tool</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scroll-hint">
+  Scroll to explore
+  <div class="scroll-arrow"></div>
+</div>
+
+<!-- WHAT IS AI AUTOMATION -->
+<section class="what-is-section">
+  <div class="section-tag">01 — Foundation</div>
+  <h2 class="section-title">What is <span>AI Automation?</span></h2>
+  <div class="divider"></div>
+
+  <div class="info-card purple">
+    <div class="icon">🤖</div>
+    <h3>AI Automation</h3>
+    <p>AI Automation means using artificial intelligence to perform tasks <em>automatically</em> — without you doing them manually. Think of it like training a robot to do your boring, repetitive work 24/7 while you sleep.</p>
+  </div>
+
+  <div class="info-card cyan">
+    <div class="icon">🧠</div>
+    <h3>AI Agents</h3>
+    <p>AI Agents are smarter — they can think, decide, and take actions on their own to complete a goal. They're like an AI employee who reads your email, decides what to do, and gets it done — without you asking step by step.</p>
+  </div>
+
+  <div class="info-card amber">
+    <div class="icon">⚙️</div>
+    <h3>n8n — Your Automation Superpower</h3>
+    <p>n8n is a free, open-source tool that lets you visually connect apps and AI together using a drag-and-drop workflow builder. It's like Zapier — but 10x more powerful and you can self-host it for FREE.</p>
+  </div>
+
+  <div class="info-card green">
+    <div class="icon">🔗</div>
+    <h3>How They Work Together</h3>
+    <p>You build a workflow in n8n, plug in an AI model (like GPT or Gemini), and your system can now automatically reply to messages, generate content, scrape data, send reports — all on autopilot.</p>
+  </div>
+</section>
+
+<!-- WHY LEARN -->
+<section>
+  <div class="section-tag">02 — Motivation</div>
+  <h2 class="section-title">Why <span>Learn This?</span></h2>
+  <div class="divider"></div>
+
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-icon">💰</div>
+      <div class="why-title">High Earning Potential</div>
+      <div class="why-desc">Freelancers charge $500–$5,000 per automation project</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🌍</div>
+      <div class="why-title">Work From Anywhere</div>
+      <div class="why-desc">All you need is a laptop and internet connection</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🚀</div>
+      <div class="why-title">Future-Proof Skill</div>
+      <div class="why-desc">Every business will need AI automation in 2–3 years</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">⏱️</div>
+      <div class="why-title">Fast to Learn</div>
+      <div class="why-desc">No coding required — start building in days</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🏢</div>
+      <div class="why-title">Sell to Businesses</div>
+      <div class="why-desc">Every business has repetitive tasks they want automated</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🎓</div>
+      <div class="why-title">Fund Your Goals</div>
+      <div class="why-desc">Earn online to fund university, travel, or your startup</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap-section">
+  <div class="section-tag">03 — The Path</div>
+  <h2 class="section-title">Your Learning <span>Roadmap</span></h2>
+  <div class="divider"></div>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p1">01</div>
+      <div class="phase-info">
+        <div class="phase-title">Understand the Basics</div>
+        <div class="phase-duration">⏱ Week 1–2</div>
+      </div>
+    </div>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="task-dot p1"></div>
+        <div class="task-text">
+          <strong>Learn what APIs are</strong>
+          <span>APIs are how apps talk to each other. This is the backbone of all automations.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p1"></div>
+        <div class="task-text">
+          <strong>Understand webhooks &amp; triggers</strong>
+          <span>Learn how automations get "triggered" when something happens (like a new email).</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p1"></div>
+        <div class="task-text">
+          <strong>Explore n8n Cloud (free tier)</strong>
+          <span>Sign up at n8n.io and play with the drag-and-drop interface. Don't overthink it.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p1"></div>
+        <div class="task-text">
+          <strong>Build your first basic workflow</strong>
+          <span>Simple task: When I get a Gmail, send me a Telegram notification.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-connector"></div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p2">02</div>
+      <div class="phase-info">
+        <div class="phase-title">n8n Core Skills</div>
+        <div class="phase-duration">⏱ Week 3–5</div>
+      </div>
+    </div>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="task-dot p2"></div>
+        <div class="task-text">
+          <strong>Master key n8n nodes</strong>
+          <span>HTTP Request, Set, If, Switch, Merge, Loop Over Items — these are your building blocks.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p2"></div>
+        <div class="task-text">
+          <strong>Connect Google Sheets + Gmail</strong>
+          <span>Build a workflow that reads data from a spreadsheet and sends automated emails.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p2"></div>
+        <div class="task-text">
+          <strong>Learn JSON &amp; data transformation</strong>
+          <span>Understand how to manipulate data as it flows through your workflows.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p2"></div>
+        <div class="task-text">
+          <strong>Self-host n8n on Railway (free)</strong>
+          <span>Move to self-hosting for unlimited workflows without cost limits.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-connector"></div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p3">03</div>
+      <div class="phase-info">
+        <div class="phase-title">Add AI to Workflows</div>
+        <div class="phase-duration">⏱ Week 6–8</div>
+      </div>
+    </div>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="task-dot p3"></div>
+        <div class="task-text">
+          <strong>Connect free AI APIs</strong>
+          <span>Use Google Gemini (free), Groq (free with llama-3.3-70b), or OpenRouter.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p3"></div>
+        <div class="task-text">
+          <strong>Build an AI content workflow</strong>
+          <span>Auto-generate Instagram captions or blog posts using AI + Google Sheets.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p3"></div>
+        <div class="task-text">
+          <strong>Create a customer support bot</strong>
+          <span>Build a chatbot that reads your FAQ and auto-replies to messages.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p3"></div>
+        <div class="task-text">
+          <strong>Understand prompting for automations</strong>
+          <span>Learn how to write system prompts that make AI behave reliably in workflows.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-connector"></div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p4">04</div>
+      <div class="phase-info">
+        <div class="phase-title">Build Real AI Agents</div>
+        <div class="phase-duration">⏱ Week 9–12</div>
+      </div>
+    </div>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="task-dot p4"></div>
+        <div class="task-text">
+          <strong>Learn n8n's AI Agent node</strong>
+          <span>n8n has a built-in AI Agent node — learn how to give it tools and memory.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p4"></div>
+        <div class="task-text">
+          <strong>Add memory with Postgres</strong>
+          <span>Give your AI agent conversation memory so it remembers context between messages.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p4"></div>
+        <div class="task-text">
+          <strong>Build a WhatsApp AI Agent</strong>
+          <span>Connect Meta WhatsApp Business API + AI to reply to customers automatically.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p4"></div>
+        <div class="task-text">
+          <strong>Add web search tools to agent</strong>
+          <span>Give your agent the ability to search the internet and use results in replies.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-connector"></div>
+
+  <!-- Phase 5 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num p5">05</div>
+      <div class="phase-info">
+        <div class="phase-title">Monetize &amp; Go Pro</div>
+        <div class="phase-duration">⏱ Month 4+</div>
+      </div>
+    </div>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="task-dot p5"></div>
+        <div class="task-text">
+          <strong>Build a portfolio of 3–5 projects</strong>
+          <span>Document your workflows with screenshots and short demo videos on YouTube/Instagram.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p5"></div>
+        <div class="task-text">
+          <strong>Find clients on Upwork &amp; LinkedIn</strong>
+          <span>Search "Zapier automation", "Make.com", "workflow automation" — those are your potential clients.</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p5"></div>
+        <div class="task-text">
+          <strong>Offer productized services</strong>
+          <span>Package your automations as fixed-price offers: "WhatsApp AI Bot — $299 setup".</span>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="task-dot p5"></div>
+        <div class="task-text">
+          <strong>Build &amp; sell n8n templates</strong>
+          <span>Share workflows on n8n's community hub — build reputation &amp; passive income.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE COURSES -->
+<section class="courses-section">
+  <div class="section-tag">04 — Free Resources</div>
+  <h2 class="section-title">Free <span>Courses</span> to Start</h2>
+  <div class="divider"></div>
+
+  <!-- Video 1 -->
+  <div class="course-card">
+    <div class="course-thumb vid1">
+      <span class="course-label free">🎓 FREE</span>
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+    <div class="course-info">
+      <h3 class="course-title">n8n Complete Beginner's Course</h3>
+      <div class="course-meta">
+        <span class="meta-chip">n8n</span>
+        <span class="meta-chip">Beginner</span>
+        <span class="meta-chip green">▶ YouTube</span>
+      </div>
+      <p class="course-desc">Start here! This video walks you through n8n from zero — what it is, how workflows work, and how to build your first automation. Perfect for absolute beginners.</p>
+      <a class="watch-btn" href="https://youtu.be/DkV7ztrhLh8?si=lG5ZOlMi6FQQWobb" target="_blank">
+        <span>▶</span> Watch on YouTube
+      </a>
+    </div>
+  </div>
+
+  <!-- Video 2 -->
+  <div class="course-card">
+    <div class="course-thumb vid2">
+      <span class="course-label free">🎓 FREE</span>
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+    <div class="course-info">
+      <h3 class="course-title">Build AI Agents with n8n</h3>
+      <div class="course-meta">
+        <span class="meta-chip">AI Agents</span>
+        <span class="meta-chip">n8n</span>
+        <span class="meta-chip green">▶ YouTube</span>
+      </div>
+      <p class="course-desc">Level up! This video dives into building actual AI Agents using n8n. Learn how to give your automation real intelligence with memory, tools, and decision-making.</p>
+      <a class="watch-btn" href="https://youtu.be/7_PeuTsx7UM?si=uJyWxHs2ityzMwBt" target="_blank">
+        <span>▶</span> Watch on YouTube
+      </a>
+    </div>
+  </div>
+
+  <!-- Other Free Resources -->
+  <h3 style="font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin: 28px 0 16px;">More Free Platforms</h3>
+
+  <div class="platform-grid">
+    <div class="platform-card">
+      <div class="platform-icon">📚</div>
+      <div class="platform-name">n8n Docs</div>
+      <div class="platform-desc">Official guides and tutorials for every node</div>
+      <div class="platform-tag">FREE</div>
+    </div>
+    <div class="platform-card">
+      <div class="platform-icon">💬</div>
+      <div class="platform-name">n8n Community</div>
+      <div class="platform-desc">Forum where experts share workflows and solutions</div>
+      <div class="platform-tag">FREE</div>
+    </div>
+    <div class="platform-card">
+      <div class="platform-icon">🤖</div>
+      <div class="platform-name">Groq AI</div>
+      <div class="platform-desc">Free AI API — use llama-3.3-70b in your agents</div>
+      <div class="platform-tag">FREE</div>
+    </div>
+    <div class="platform-card">
+      <div class="platform-icon">✨</div>
+      <div class="platform-name">Google AI Studio</div>
+      <div class="platform-desc">Free Gemini API for your automations</div>
+      <div class="platform-tag">FREE</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO LEARN -->
+<section>
+  <div class="section-tag">05 — Strategy</div>
+  <h2 class="section-title">How to <span>Learn Fast</span></h2>
+  <div class="divider"></div>
+
+  <div class="tip-card t1">
+    <div class="tip-icon">🎯</div>
+    <div>
+      <div class="tip-title">Build, Don't Just Watch</div>
+      <div class="tip-text">For every video you watch, immediately try to replicate what they built. Passive watching = zero skills. Active building = real skills.</div>
+    </div>
+  </div>
+
+  <div class="tip-card t2">
+    <div class="tip-icon">📱</div>
+    <div>
+      <div class="tip-title">Document Your Journey</div>
+      <div class="tip-text">Post what you build on Instagram or YouTube. Your audience grows, your skills solidify, and you attract clients — all at the same time.</div>
+    </div>
+  </div>
+
+  <div class="tip-card t3">
+    <div class="tip-icon">⚡</div>
+    <div>
+      <div class="tip-title">1 Hour Daily = Enough</div>
+      <div class="tip-text">Consistency beats intensity. 1 focused hour every day for 3 months will make you more skilled than someone who studies 5 hours once a week.</div>
+    </div>
+  </div>
+
+  <div class="tip-card t4">
+    <div class="tip-icon">🔧</div>
+    <div>
+      <div class="tip-title">Break Things on Purpose</div>
+      <div class="tip-text">Errors are your best teachers. When something breaks, don't give up — debug it. That problem-solving skill is what clients pay for.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+  <div class="cta-emoji">🚀</div>
+  <h2>Ready to Start Your Journey?</h2>
+  <p>The best time to start learning AI automation was a year ago. The second best time is right now. Start with Phase 1 today — just 1 hour.</p>
+  <a class="cta-btn" href="https://youtu.be/DkV7ztrhLh8?si=lG5ZOlMi6FQQWobb" target="_blank">▶ Watch First Video</a>
+</div>
+
+<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:12px; font-family:'JetBrains Mono',monospace; border-top: 1px solid var(--border);">
+  Made for beginners · AI × n8n · 2025
+</div>
+
+</body>
+</html>
